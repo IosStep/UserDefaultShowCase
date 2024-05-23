@@ -8,10 +8,31 @@
 import UIKit
 
 class ViewController2: UIViewController {
+    
+    lazy var button: UIButton = {
+        let button = UIButton()
+        button.setTitle("Tap me", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func buttonTapped() {
+        let vc = BottonSheetViewController()
+        vc.height = 400
+        vc.saveAction = { text in
+            self.button.setTitle(text, for: .normal)
+        }
+        present(vc, animated: true)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        view.addSubview(button)
+        button.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
         // Do any additional setup after loading the view.
     }
     
